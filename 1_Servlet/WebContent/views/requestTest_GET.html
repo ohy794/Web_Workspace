@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>GET방식 테스트 요청 페이지</title>
+<style>
+	ul{
+	list-style:none;
+	line-height:200%;
+	}
+</style>
+</head>
+<body>
+	<h1>GET 방식으로 요청 후 응답페이지 받아보기</h1>
+	<p>
+		특징1. GET방식으로 요청하는건 URL의 Header영역에 데이터들을 포함시켜서 요청함<br>
+		=> 사용자가 입력한 값(데이터)들이 URL에 노출됨<br>
+		=> 보안유지가 불가능함<br>
+		=> 즉, 로그인이나 회원가입 같은 경우 get방식이 부적합 함<br><br>
+		
+		특징2. Header영역은 전송하는 길이에 제한이 있음<br>
+		=> 방대한 데이터를 담았을 경우 초과된 데이터는 절단되서 넘어감<br>
+		=> 즉, 게시판 작성같은 경우 GET방식이 부적합함<br><br>
+		
+		특징3. URL에 데이터가 노출되기 때문에 즐겨찾기, 북마크 기능이 가능<br>
+		=> 즉, 검색기능같은 경우 get방식이 적합<br>
+	</p>
+	
+</body>
+</html>
