@@ -26,5 +26,66 @@
 		=> 즉, 검색기능같은 경우 get방식이 적합<br>
 	</p>
 	
+	<h2>개인정보 입력 - GET</h2>
+	
+	<!-- 
+		form내의 제출버튼(submit == 버튼태그의 기본값)클릭시 form태그 속성중 action에 작성된 url로 요청이됨(제출)
+		즉, Servlet을 호출한다 라고 생각 
+		
+		Servlet요청 시 그 요청 값이 현재 웹 애플리케이션의 contextpath == 처음에 지정했던(servlet) context root
+		
+		http://localhost:8081/contextpath(servlet)/url값(test.do)
+		
+		절대경로방식( 시작값이 / 로 시작되는경우) : localhost:8081뒤에 action에 작성한값이 바로 붙여지면서 요청이들어감
+			ex) localhost:8081/servlet/test.do
+		
+		상대경로방식(시작이 /로 시작되지 않는경우) : 현재 이 페이지가 보여질 때의 url경로중 마지막 / 로부터 action에 작성한 값이 이어붙여지면서 요청이들어감				
+			ex) localhost:8081/servlet/views/requset..html/servlet/test.do
+	 -->
+	
+	<form action="/servlet/test.do" method="get"> <!-- 절대경로방식 -->
+		<ul>
+			<li>
+				<!-- input 태그 사용시 key값(name속성값)은 반드시 넘겨야 한다 -->
+				이름 : <input type="text" name="name">
+			</li>
+			<li>
+				성별 : 
+				남자  <input type="radio" name="gender" value="M">
+				여자	 <input type="radio" name="gender" value="F">
+				<!--radio 버튼 사용시 같은 묶음으로 묶어줄 경우 name속성값(key값)을 동일하게 작성해야함 -->
+			</li>
+			<li>
+				나이 <input type="number" name="age" >
+			</li>
+			<li>
+				사는도시:
+				<select name="city">
+					<option>서울시</option>
+					<option>경기도</option>
+					<option>부산</option>
+				</select>
+			</li>
+			<li>
+				키 : <input type="range" name="height" min="140" max="250">
+			</li>
+			<li>
+				좋아하는 음식(모두 고루시오):
+				한식 <input type="checkbox" name="food" value="한식">
+				중식 <input type="checkbox" name="food" value="중식">
+				일식 <input type="checkbox" name="food" value="일식">
+				양식 <input type="checkbox" name="food" value="양식">
+				베트남식 <input type="checkbox" name="food" value="베트남식">
+			</li>
+			<li>
+				<input type="submit">
+				<input type="reset">
+			</li>
+		</ul>
+	</form>
+	
+	
+	
+	
 </body>
 </html>
