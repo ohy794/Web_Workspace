@@ -1,8 +1,6 @@
 package com.kh.notice.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,16 +11,16 @@ import com.kh.notice.model.service.NoticeService;
 import com.kh.notice.model.vo.Notice;
 
 /**
- * Servlet implementation class NoticeListContentController
+ * Servlet implementation class NoticeUpdateFormController
  */
-@WebServlet("/list.no")
-public class NoticeListContentController extends HttpServlet {
+@WebServlet("/updateForm.no")
+public class NoticeUpdateFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeListContentController() {
+    public NoticeUpdateFormController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,18 +30,20 @@ public class NoticeListContentController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//1) 공지사항 전체 리스트 조회 한 후
-		ArrayList<Notice> list = new NoticeService().selectNoticeList();
+		int nno = Integer.parseInt(request.getParameter("nno")); 
 		
-		// SELECT * FROM NOTICE WHERE STATUS ='Y'
-		//System.out.println(list);
+		Notice n = new NoticeService().selectNotice(nno);
 		
-		//2) 조회결과를 담아서 응답페이지로 포워딩
-		request.setAttribute("list", list);
+		request.setAttribute("n", n);
+		request.getRequestDispatcher("views/notice/noticeUpdateForm.jsp").forward(request, response);
 		
-		request.getRequestDispatcher("views/notice/noticeListView.jsp").forward(request, response);
 		
-
+		
+		
+		
+		
+		
+		
 	}
 
 	/**
