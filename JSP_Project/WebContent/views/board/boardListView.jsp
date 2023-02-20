@@ -40,7 +40,7 @@
 		<!-- 글등록버튼(로그인한 회원만 보이도록) -->
 		<% if(loginUser != null){%>
 			<div align="right" style="width:850px">
-				<a href="<%=contextPath %>/enrollForm.bo" class="btn btn-secondary">글작성</a>
+				<a href="<%=contextPath %>/insert.bo" class="btn btn-secondary">글작성</a>
 			</div>
 		
 		<%} %>

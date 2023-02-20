@@ -144,8 +144,8 @@ public class boardListController extends HttpServlet {
 		 
 		 request.setAttribute("pi", pi);
 		 request.setAttribute("list", list);
-		 System.out.println(pi);
-		 System.out.println(list);
+//		 System.out.println(pi);
+//		 System.out.println(list);
 		 
 		 request.getRequestDispatcher("views/board/boardListView.jsp").forward(request, response);
 		 
