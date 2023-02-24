@@ -24,10 +24,10 @@ public class NoticeUpdateController extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-	
-		/**
-		 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-		 */
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -37,13 +37,12 @@ public class NoticeUpdateController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		request.setCharacterEncoding("UTF-8");
 		
 		int nno = Integer.parseInt(request.getParameter("nno"));
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
-		
 		
 		Notice n = new Notice();
 		n.setNoticeNo(nno);
@@ -52,17 +51,37 @@ public class NoticeUpdateController extends HttpServlet {
 		
 		int result = new NoticeService().updateNotice(n);
 		
-		if(result > 0) {//성공시 => /detail.no?nno=nno 상세보기 페이지가 보여지도록함
+		if(result > 0) { // 성공시 => /detail.no?nno=nno 상세보기 페이지가 보여지도록함.
 			
 			request.getSession().setAttribute("alertMsg", "성공적으로 공지사항이 수정되었습니다");
 			response.sendRedirect(request.getContextPath()+"/detail.no?nno="+nno);
-		
-		}else { // 실패시 에러페이지로 포워딩
+			
+		}else { // 실패 => 에러페이지로 포워딩
 			
 			request.setAttribute("errorMsg", "공지사항 수정 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	}
 
 }

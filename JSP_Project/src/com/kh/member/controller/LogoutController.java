@@ -1,4 +1,4 @@
-package com.kh.notice.controller;
+package com.kh.member.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,19 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.notice.model.service.NoticeService;
-
 /**
- * Servlet implementation class NoticeDeleteController
+ * Servlet implementation class LogoutController
  */
-@WebServlet("/delete.no")
-public class NoticeDeleteController extends HttpServlet {
+@WebServlet("/logout.me")
+public class LogoutController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeDeleteController() {
+    public LogoutController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,45 +26,17 @@ public class NoticeDeleteController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		// 로그아웃 요청 처리 => 연동되어있던 loginUser 세션정보를 만료시키기(세션 무효화)
+		// request.getSession().removeAttribute("loginUser");
+		request.getSession().invalidate();// 세션영역에 있는 데이터를 모두 날리는 함수
+	
+		// 응답페이지 => /jspproject
+		// url재요청방식 
 		
-		int nno = Integer.parseInt(request.getParameter("nno"));
+		response.sendRedirect(request.getContextPath());// /jspproject
 		
-		/*
-		 * UPDATE NOTICE
-		 * SET STATUS = 'N'
-		 * WHERE NOTICE_NO = ${nno}
-		 * 
-		 */
 		
-		int result = new NoticeService().deleteNotice(nno);
-		
-		if(result > 0) {
-			
-			request.getSession().setAttribute("alertMsg", "성공적으로 공지사항이 삭제되었습니다");
-			 
-			response.sendRedirect( request.getContextPath()  +"/list.no");
-			
-		}else {
-			request.setAttribute("errorMsg", "공지사항 삭제 실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-		}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	}
 
 	/**

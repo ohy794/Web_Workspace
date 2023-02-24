@@ -1,5 +1,6 @@
 package com.kh.board.controller;
 
+import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,19 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.board.model.service.BoardService;
 import com.kh.board.model.vo.Attachment;
-import com.kh.board.model.vo.Board;
+import com.kh.member.model.vo.Member;
 
 /**
- * Servlet implementation class BoardDetailController
+ * Servlet implementation class BoardDeleteController
  */
-@WebServlet("/detail.bo")
-public class BoardDetailController extends HttpServlet {
+@WebServlet(urlPatterns = "/delete.bo" , name="boardDeleteServlet" )
+public class BoardDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardDetailController() {
+    public BoardDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,40 +31,27 @@ public class BoardDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		int boardNo = Integer.parseInt(request.getParameter("bno"));
 		
-		BoardService bService = new BoardService();
+		int userNo = ((Member) request.getSession().getAttribute("loginUser")).getUserNo();
+	
+		Attachment at = new BoardService().selectAttachment(boardNo);
 		
-		// 조회수 증가 / 게시글 조회 (Board) / 첨부파일 조회(Attachment)
+		int result = new BoardService().deleteBoard(boardNo, userNo , at);
 		
-		int result = bService.increaseCount(boardNo);
-		
-		if(result > 0 ) { // 유효한 게시글일때 => 게시글정보, 첨부파일을 조회해서 request영역안에 담은후에 , 상세페이지로 포워딩
-			
-			Board b = bService.selectBoard(boardNo);
-			Attachment at = bService.selectAttachment(boardNo);
-			
-			request.setAttribute("b", b);
-			request.setAttribute("at", at);
-			
-			request.getRequestDispatcher("views/board/boardDetailView.jsp").forward(request, response);
-			
-		}else { // 조회수 증가 실패시
-			request.setAttribute("errorMsg", "게시글 상세조회 실패");
+		if(result > 0) {
+			//삭제처리
+			if(at != null) {
+				String savePath = request.getSession().getServletContext().getRealPath(at.getFilePath());				
+				new File(savePath+at.getChangeName()).delete();
+			}
+			request.getSession().setAttribute("alertMsg", "성공적으로 게시글을 삭제했습니다.");
+			response.sendRedirect(request.getContextPath()+"/list.bo");
+		}else {
+			request.setAttribute("errorMsg", "게시글작성에 실패했습니다..");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	}
 

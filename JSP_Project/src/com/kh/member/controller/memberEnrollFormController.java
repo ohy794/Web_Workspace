@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class MemberEnrollFormController
  */
 @WebServlet("/enrollForm.me")
-public class memberEnrollFormController extends HttpServlet {
+public class MemberEnrollFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public memberEnrollFormController() {
+    public MemberEnrollFormController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +26,8 @@ public class memberEnrollFormController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("views/member/memberEnrollForm.jsp").forward(request, response);
+		// 포워딩 방식
+		request.getRequestDispatcher("views/member/memberEnrollForm.jsp").forward(request,response);
 	}
 
 	/**

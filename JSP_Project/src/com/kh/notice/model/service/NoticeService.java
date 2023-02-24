@@ -2,58 +2,59 @@ package com.kh.notice.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import static com.kh.common.JDBCTemplate.*;//JDBCTemplate 클래스의 모든 메소드들을 그냥 가져다 쓸수 있음
+
+import static com.kh.common.JDBCTemplate.*;//JDBCTemplate 클래스의 모든 메소드들을 그냥 가져다가 쓸수 있음.
 
 import com.kh.notice.model.dao.NoticeDao;
 import com.kh.notice.model.vo.Notice;
 
 public class NoticeService {
+
 	
-	
-	public ArrayList<Notice> selectNoticeList() {
-		
+	public ArrayList<Notice> selectNoticeList(){
 		Connection conn = getConnection();
-
+		
 		ArrayList<Notice> list = new NoticeDao().selectNoticeList(conn);
-
+		
 		close(conn);
-
+		
 		return list;
 	}
-
+	
 	public int increaseCount(int nno) {
-
+		
 		Connection conn = getConnection();
-
+		
 		int result = new NoticeDao().increaseCount(conn, nno);
-
-		if (result > 0) {
+		
+		if(result > 0) {
 			commit(conn);
-		} else {
+		}else {
 			rollback(conn);
 		}
-		close(conn);
-
-		return result;
-	}
-
-	public Notice selectNotice(int nno) {
-
-		Connection conn = getConnection();
-
-		Notice n = new NoticeDao().selectNotice(conn, nno);
-
-		close(conn);
-
-		return n;
 		
+		close(conn);
+		
+		return result;		
 	}
 	
-	public int insertNotice(String title, String content, String noticeWriter) {
+	
+	public Notice selectNotice(int nno) {
 		
 		Connection conn = getConnection();
 		
-		int result = new NoticeDao().insertNotice(conn, title, content, noticeWriter);
+		Notice n = new NoticeDao().selectNotice(conn , nno);
+		
+		close(conn);
+		
+		return n;
+	}
+	
+	public int inesrtNotice(Notice n) {
+		
+		Connection conn = getConnection();
+		
+		int result = new NoticeDao().insertNotice(conn, n);
 		
 		if(result > 0) {
 			commit(conn);
@@ -62,6 +63,7 @@ public class NoticeService {
 		}else {
 			rollback(conn);
 		}
+		
 		close(conn);
 		
 		return result;
@@ -74,10 +76,12 @@ public class NoticeService {
 		
 		if(result > 0) {
 			commit(conn);
-		}else {
+		}else{
 			rollback(conn);
 		}
+		
 		close(conn);
+		
 		return result;
 	}
 	
@@ -88,11 +92,44 @@ public class NoticeService {
 		
 		if(result > 0) {
 			commit(conn);
-		}else {
+		}else{
 			rollback(conn);
 		}
+		
 		close(conn);
+		
 		return result;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

@@ -9,16 +9,17 @@
 	
 	#enroll-form table{margin:auto;}
 	#enroll-form input{margin:5px;}
+	
 </style>
 </head>
 <body>
 	<%@ include file="../common/menubar.jsp" %>
-	<!-- ../ : 현재 위치로부터 한번 빠져나감(상위 디렉토리로 이동) -->
+	<!--  ../ : 현재 위치로부터 한번 빠져나감(상위 디렉토리로 이동) -->
 	<div class="outer">
 		<br>
 		<h2 align="center">회원가입</h2>
-		<form id="enroll-form" action="<%= contextPath%>/insert.me" method="post">
-		  	<!-- 아이디, 비밀번호, 이름, 전화번호, 이메일, 주소, 취미 -->
+		<form id="enroll-form" action="<%=contextPath %>/insert.me" method="post">
+			  <!-- 아이디, 비밀번호, 이름, 전화번호, 이메일, 주소, 취미 -->
 	            <table>
 	                <!-- (tr>td*3)*8 -->
 	                <tr>
@@ -61,38 +62,46 @@
 	                    <td colspan="2">
 	                        <!-- (input[type=checkbox name=interest id= value=]+label)*6 -->
 	
-                        <input type="checkbox" name="interest" id="sports" value="운동">
-                        <label for="sports">운동</label>
-
-                        <input type="checkbox" name="interest" id="hiking" value="등산">
-                        <label for="hiking">등산</label>
-
-                        <input type="checkbox" name="interest" id="fishing" value="낚시">
-                        <label for="fishing">낚시</label>
-
-                        <br>
-
-                        <input type="checkbox" name="interest" id="cooking" value="요리">
-                        <label for="cooking">요리</label>
-
-                        <input type="checkbox" name="interest" id="game" value="게임">
-                        <label for="game">게임</label>
-
-                        <input type="checkbox" name="interest" id="movie" value="영화">
-                        <label for="movie">영화</label>
-                    </td>
-                </tr>
-            </table>
-            
-            <br><br>
-            
-            <div align="center">
-            	<button type="submit">회원가입</button>
-            	<button type="reset">초기화</button>
-            </div>
-            <br><br>
-            
+	                        <input type="checkbox" name="interest" id="sports" value="운동">
+	                        <label for="sports">운동</label>
+	
+	                        <input type="checkbox" name="interest" id="hiking" value="등산">
+	                        <label for="hiking">등산</label>
+	
+	                        <input type="checkbox" name="interest" id="fishing" value="낚시">
+	                        <label for="fishing">낚시</label>
+	
+	                        <br>
+	
+	                        <input type="checkbox" name="interest" id="cooking" value="요리">
+	                        <label for="cooking">요리</label>
+	
+	                        <input type="checkbox" name="interest" id="game" value="게임">
+	                        <label for="game">게임</label>
+	
+	                        <input type="checkbox" name="interest" id="movie" value="영화">
+	                        <label for="movie">영화</label>
+	                    </td>
+	                </tr>
+	            </table>
+	            
+	            <br><br>
+	            
+	            <div align="center">
+	            	<button type="submit">회원가입</button>
+	            	<button type="reset">초기화</button>
+	            </div>
+	            <br><br>
 		</form>
+	
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	
 </body>
 </html>

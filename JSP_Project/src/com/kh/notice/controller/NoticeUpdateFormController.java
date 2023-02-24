@@ -30,20 +30,15 @@ public class NoticeUpdateFormController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int nno = Integer.parseInt(request.getParameter("nno")); 
+		int nno = Integer.parseInt(request.getParameter("nno"));
+		
 		
 		Notice n = new NoticeService().selectNotice(nno);
 		
 		request.setAttribute("n", n);
 		request.getRequestDispatcher("views/notice/noticeUpdateForm.jsp").forward(request, response);
-		
-		
-		
-		
-		
-		
-		
-		
+	
+	
 	}
 
 	/**

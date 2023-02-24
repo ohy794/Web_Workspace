@@ -1,12 +1,12 @@
 package com.kh.common.model.vo;
 
 public class PageInfo {
-	
-	private int listCount; // 현재 게시판의 총개시글수
-	private int currentPage; // 현재 페이지(사용자가 요청한페이지)
+
+	private int listCount; // 현재 게시판의 총 개시글 갯수
+	private int currentPage; // 현제 페이지(사용자가 요청한페이지)
 	private int pageLimit; // 페이지 하단에 보여질 페이징바의 페이지 최대 갯수
 	private int boardLimit; // 한 페이지에 보여질 게시글의 최대 갯수
-	private int maxPage; // 가장 마지막 페이지가 몇번 페이지인지 (총 페이지 수 )
+	private int maxPage; // 가장 마지막 페이지가 몇번 페이지인지 (총 페이지 수)
 	private int startPage; // 페이지 하단에 보여질 페이징바의 시작수
 	private int endPage; // 페이지 하단에 보여질 페이징바의 끝 수
 	
@@ -83,12 +83,27 @@ public class PageInfo {
 	}
 
 	@Override
-	public String toString() {
+	public String toString() { 
 		return "PageInfo [listCount=" + listCount + ", currentPage=" + currentPage + ", pageLimit=" + pageLimit
 				+ ", boardLimit=" + boardLimit + ", maxPage=" + maxPage + ", startPage=" + startPage + ", endPage="
 				+ endPage + "]";
 	}
 	
 	
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

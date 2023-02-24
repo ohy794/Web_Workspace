@@ -30,11 +30,7 @@ public class MemberDao {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
-			
-	
-		
 	
 	
 	public Member loginMember(Connection conn, String userId, String userPwd) {
@@ -42,15 +38,16 @@ public class MemberDao {
 		// Select문 => ResultSet객체(조회된 행은 1개이거나 없거나)
 		Member m = null;
 		
-		ResultSet rset = null;
+		ResultSet rset= null;
 		
 		PreparedStatement pstmt = null;
 		
-		String sql = prop.getProperty("loginMember"); 
+		String sql = prop.getProperty("loginMember");
+		
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-
+			
 			pstmt.setString(1, userId);
 			pstmt.setString(2, userPwd);
 			
@@ -58,19 +55,17 @@ public class MemberDao {
 			
 			if(rset.next()) {
 				m = new Member(rset.getInt("USER_NO"),
-						 	   rset.getString("USER_ID"),
-						 	   rset.getString("USER_PWD"),
-						 	   rset.getString("USER_NAME"),
-						 	   rset.getString("PHONE"),
-						 	   rset.getString("EMAIL"),
-						 	   rset.getString("ADDRESS"),
-						 	   rset.getString("INTEREST"),
-						 	   rset.getDate("ENROLL_DATE"),
-						 	   rset.getDate("MODIFY_DATE"),
-						 	   rset.getString("STATUS"));
-			
+						       rset.getString("USER_ID"),
+						       rset.getString("USER_PWD"),
+						       rset.getString("USER_NAME"),
+						       rset.getString("PHONE"),
+						       rset.getString("EMAIL"),
+						       rset.getString("ADDRESS"),
+						       rset.getString("INTEREST"),
+						       rset.getDate("ENROLL_DATE"),
+						       rset.getDate("MODIFY_DATE"),
+						       rset.getString("STATUS"));
 			}
-			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -81,13 +76,13 @@ public class MemberDao {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 		}
 		
-		return m;	
-		
+		return m;		
 	}
-	public int insertMember(Connection conn, Member m ) {
+	
+	public int insertMember(Connection conn, Member m) {
+		//Insert문 => 처리된 행의 갯수
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
@@ -108,141 +103,151 @@ public class MemberDao {
 			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
-		
 	}
 	
-		public int updateMember(Connection conn, Member m) {
+	public int updateMember(Connection conn, Member m) {
+		
+		// UPDATE문 => 반환값 처리된 행의 갯수가 반환됨
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateMember");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
 			
-			int result =0;
-			PreparedStatement pstmt = null;
+			pstmt.setString(1, m.getUserName());
+			pstmt.setString(2, m.getPhone());
+			pstmt.setString(3, m.getEmail());
+			pstmt.setString(4, m.getAddress());
+			pstmt.setString(5, m.getInterest());
+			pstmt.setString(6, m.getUserId());
 			
-			String sql = prop.getProperty("updateMember");
+			result = pstmt.executeUpdate();
 			
-			try {
-				pstmt = conn.prepareStatement(sql);
-				
-				pstmt.setString(1, m.getUserName());
-				pstmt.setString(2, m.getPhone());
-				pstmt.setString(3, m.getEmail());
-				pstmt.setString(4, m.getAddress());
-				pstmt.setString(5, m.getInterest());
-				pstmt.setString(6, m.getUserId());
-				
-				result = pstmt.executeUpdate(); 
-						
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-			}finally {
-				JDBCTemplate.close(pstmt);
-			}
-			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
 		}
 		
-		public Member selectMember(Connection conn, String userId) {
-			
-			// Select문 => ResultSet객체(id값은 unique제약조건이 걸려있어서 한행만 조회)
-			
-			Member m = null;
-			PreparedStatement pstmt = null;
-			ResultSet rset = null;
-			
-			String sql = prop.getProperty("selectMember");
-			
-			try {
-				pstmt = conn.prepareStatement(sql);
-				
-				pstmt.setString(1, userId);
-				
-				rset = pstmt.executeQuery();
-				
-				if(rset.next()) {
-					m = new Member(rset.getInt("USER_NO"),
-						 	   rset.getString("USER_ID"),
-						 	   rset.getString("USER_PWD"),
-						 	   rset.getString("USER_NAME"),
-						 	   rset.getString("PHONE"),
-						 	   rset.getString("EMAIL"),
-						 	   rset.getString("ADDRESS"),
-						 	   rset.getString("INTEREST"),
-						 	   rset.getDate("ENROLL_DATE"),
-						 	   rset.getDate("MODIFY_DATE"),
-						 	   rset.getString("STATUS"));
-				}
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}finally {
-				JDBCTemplate.close(rset);
-				JDBCTemplate.close(pstmt);
-			}
-			return m;
-		}
+		return result;
+	}
 	
-		public int updatePwdMember(Connection conn, String userId, String userPwd, String updatePwd) {
+	public Member selectMember(Connection conn, String userId) {
+		
+		// Select문 => ResultSet객체 (id값은 unique제약조건이 걸려있어서 한행만 조회)
+		
+		Member m = null;
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset =null;
+		
+		String sql = prop.getProperty("selectMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
 			
-			int result = 0;
+			pstmt.setString(1, userId);
 			
-			PreparedStatement pstmt = null;
+			rset = pstmt.executeQuery();
 			
-			String sql = prop.getProperty("updatePwdMember");
-			
-			try {
-				pstmt = conn.prepareStatement(sql);
-				
-				pstmt.setString(1, updatePwd);
-				pstmt.setString(2, userId);
-				pstmt.setString(3, userPwd);
-				
-				result = pstmt.executeUpdate();
-				
-			} catch (SQLException e) {
-			
-				e.printStackTrace();
-			}finally {
-				JDBCTemplate.close(pstmt);
+			if(rset.next()) {
+				m = new Member(rset.getInt("USER_NO"),
+					       rset.getString("USER_ID"),
+					       rset.getString("USER_PWD"),
+					       rset.getString("USER_NAME"),
+					       rset.getString("PHONE"),
+					       rset.getString("EMAIL"),
+					       rset.getString("ADDRESS"),
+					       rset.getString("INTEREST"),
+					       rset.getDate("ENROLL_DATE"),
+					       rset.getDate("MODIFY_DATE"),
+					       rset.getString("STATUS"));
 			}
-			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			//생성된 순서의 역순으로 닫아주기
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
 		}
-		public int deleteMember(Connection conn, String userId, String userPwd) {
+		
+		
+		
+		return m;
+	}
+	
+	public int updatePwdMember(Connection conn, String userId, String userPwd, String updatePwd) {
+		
+		// UPDATE문= > 처리된 행의 갯수
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updatePwdMember");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
 			
-			int result = 0;
+			pstmt.setString(1, updatePwd);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, userPwd);
 			
-			String sql = prop.getProperty("deleteMember");
+			result = pstmt.executeUpdate();
 			
-			PreparedStatement pstmt = null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	
+	public int deleteMember(Connection conn, String userId, String userPwd) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
 			
-			try {
-				pstmt = conn.prepareStatement(sql);
-				
-				pstmt.setString(1, userId);
-				pstmt.setString(2, userPwd);
-				
-				result = pstmt.executeUpdate();
-				
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-			}finally {
-				JDBCTemplate.close(pstmt);
-			}
-				return result;
-			}
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userPwd);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
 		
-
-		
-		
-		
-		
-		
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
-
-
-
-

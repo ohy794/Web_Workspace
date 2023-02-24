@@ -27,21 +27,23 @@ public class MyPageController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// url로 직접요청도 가능하기때문에 인증되지 않은 사용자의 접근을 막기위해 백단에 코드를추가시켜줘야함
-		// 로그인하기전, 로그인후
+		
+		// url로 직접요청도 가능하기때문에 인증되지 않은 사용자의 접근을 막기위해 백단에 코드를 추가시켜줘야함
+		// 로그인하기전, 로그인후 
 		// HttpSession객체 가져오기
 		HttpSession session = request.getSession();
 		
-		//로그인전
+		//로그인 전
 		if(session.getAttribute("loginUser") == null) {
 			
-			session.setAttribute("alerMsg", "로그인 후 이용가능한 서비스입니다");
+			session.setAttribute("alertMsg", "로그인 후 이용가능한 서비스입니다");
 			response.sendRedirect(request.getContextPath());
 		}
-		//로그인후
+		//로그인 후
 		else {
-			request.getRequestDispatcher("views/member/myPage.jsp").forward(request, response);
+			request.getRequestDispatcher("views/member/mypage.jsp").forward(request, response);
 		}
+		
 	}
 
 	/**

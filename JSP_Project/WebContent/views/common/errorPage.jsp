@@ -2,8 +2,7 @@
     pageEncoding="UTF-8"%>
 <%
 	String errorMsg = (String) request.getAttribute("errorMsg");
-%>    
-    
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +10,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1 align="center" style="color:red;'"><%= errorMsg %> </h1>
+	<h1 align="center" style="color:red;"><%= errorMsg %></h1>
 </body>
 </html>

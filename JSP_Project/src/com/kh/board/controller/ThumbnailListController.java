@@ -1,23 +1,29 @@
-package com.kh.member.controller;
+package com.kh.board.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.board.model.service.BoardService;
+import com.kh.board.model.vo.Board;
+
 /**
- * Servlet implementation class LogotoutController
+ * Servlet implementation class ThumbnailListController
  */
-@WebServlet("/logout.me")
-public class LogotoutController extends HttpServlet {
+@WebServlet("/list.th")
+public class ThumbnailListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogotoutController() {
+    public ThumbnailListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,15 +33,11 @@ public class LogotoutController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 로그아웃 요청 처리 => 연동되어있던 loginUser 세션정보를 만료시키기(세션무효화)
-		// request.getsession().removeAttribute("loginUser");
-		request.getSession().invalidate();// 세선영역에 있는 데이터를 모두 날리는 함수
+		ArrayList<Board> list = new BoardService().selectThumbnailList();
 		
-		// 응답페이지 => /jspproject
-		// url재요청방식
+		request.setAttribute("list", list);
 		
-		response.sendRedirect(request.getContextPath()); // jspproject
-		
+		request.getRequestDispatcher("views/board/thumbnailListView.jsp").forward(request, response);
 	}
 
 	/**

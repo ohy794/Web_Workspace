@@ -31,7 +31,7 @@ public class NoticeDetailController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// 클릭했을때의 공지사항 글번호 가져오기
-		int nno = Integer.parseInt(request.getParameter("nno"));
+		int nno = Integer.parseInt(request.getParameter("nno"));// "1" , "2"	, ""	
 		/*
 		 * SELECT *
 		 * FROM NOTICE
@@ -41,9 +41,9 @@ public class NoticeDetailController extends HttpServlet {
 		// 조회수 증가용 서비스
 		/*
 		 * UPDATE NOTICE SET
-		 * COUNT = COUNT 1
-		 * WHRER NOTICE_NO=${nno}
-		 */
+		 * COUNT = COUNT +1
+		 * WHERE NOTICE_NO = ${nno}
+		 *  */
 		int result = new NoticeService().increaseCount(nno);
 		// 조회수 증가에 성공했을때 -> 공지사항 상세조회후 noticeDetatilView로 포워딩
 		if(result > 0) {
@@ -51,16 +51,15 @@ public class NoticeDetailController extends HttpServlet {
 			Notice n = new NoticeService().selectNotice(nno);
 			request.setAttribute("n", n);
 			
+			//response.sendRedirect("/jspproject"); request에 담겨있떤 데이터가 싹 날라간다.
+			
 			request.getRequestDispatcher("views/notice/noticeDetailView.jsp").forward(request, response);
-
-		}else {// 조회수 증가 실패시 ->에러페이지로 포워딩
+			
+		} else { // 조회수 증가 실패시 -> 에러페이지로 포워딩
 			request.setAttribute("errorMsg", "공지사항 조회 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-		
-		
-		
-		
+	
 	}
 
 	/**

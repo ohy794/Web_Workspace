@@ -3,15 +3,15 @@ package com.kh.board.model.vo;
 import java.sql.Date;
 
 public class Attachment {
-	private int fileNo;
-	private int refBno;
-	private String originName;
-	private String changeName;
-	private String filePath;
-	private Date uploadDate;
-	private int fileLevel;
-	private String status;
-		
+	private int fileNo;			//	FILE_NO
+	private int refBno;			//	REF_BNO
+	private String originName;			//	ORIGIN_NAME
+	private String changeName;			//	CHANGE_NAME
+	private String filePath;			//	FILE_PATH
+	private Date uploadDate;			//	UPLOAD_DATE
+	private int fileLevel;			//	FILE_LEVEL
+	private String status;			//	STATUS
+	
 	public Attachment() {
 		super();
 	}
@@ -99,6 +99,16 @@ public class Attachment {
 				+ changeName + ", filePath=" + filePath + ", uploadDate=" + uploadDate + ", fileLevel=" + fileLevel
 				+ ", status=" + status + "]";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

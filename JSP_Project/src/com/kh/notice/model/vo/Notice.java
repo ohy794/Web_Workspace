@@ -3,14 +3,14 @@ package com.kh.notice.model.vo;
 import java.sql.Date;
 
 public class Notice {
-
-	private int noticeNo;
-	private String noticeTitle; 
-	private String noticeContent;
-	private String noticeWriter;
-	private int count;
-	private Date createDate; 
-	private String status;
+	
+	private int noticeNo; //	NOTICE_NO
+	private String noticeTitle;//	NOTICE_TITLE
+	private String noticeContent; //	NOTICE_CONTENT
+	private String noticeWriter;//	NOTICE_WRITER
+	private int count;//	COUNT
+	private Date createDate;//	CREATE_DATE
+	private String status;//	STATUS
 	
 	public Notice() {
 		super();
@@ -44,7 +44,7 @@ public class Notice {
 		this.noticeContent = noticeContent;
 		this.noticeWriter = noticeWriter;
 		this.createDate = createDate;
-	}
+	}	
 
 	public int getNoticeNo() {
 		return noticeNo;

@@ -1,25 +1,29 @@
-package com.kh.notice.controller;
+package com.kh.board.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.notice.model.service.NoticeService;
+import com.kh.board.model.service.BoardService;
+import com.kh.board.model.vo.Attachment;
+import com.kh.board.model.vo.Board;
 
 /**
- * Servlet implementation class NoticeDeleteController
+ * Servlet implementation class ThumbnailDetailController
  */
-@WebServlet("/delete.no")
-public class NoticeDeleteController extends HttpServlet {
+@WebServlet("/detail.th")
+public class ThumbnailDetailController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeDeleteController() {
+    public ThumbnailDetailController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,44 +32,24 @@ public class NoticeDeleteController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		int boardNo = Integer.parseInt(request.getParameter("bno"));
 		
-		int nno = Integer.parseInt(request.getParameter("nno"));
-		
-		/*
-		 * UPDATE NOTICE
-		 * SET STATUS = 'N'
-		 * WHERE NOTICE_NO = ${nno}
-		 * 
-		 */
-		
-		int result = new NoticeService().deleteNotice(nno);
+		int result = new BoardService().increaseCount(boardNo);
 		
 		if(result > 0) {
+			Board b = new BoardService().selectBoard(boardNo);
 			
-			request.getSession().setAttribute("alertMsg", "성공적으로 공지사항이 삭제되었습니다");
-			 
-			response.sendRedirect( request.getContextPath()  +"/list.no");
+			ArrayList<Attachment> list = new BoardService().selectAttachmentList(boardNo);
 			
+			request.setAttribute("b", b);
+			request.setAttribute("list", list);
+			
+			request.getRequestDispatcher("views/board/thumbnailDetailView.jsp").forward(request, response);
 		}else {
-			request.setAttribute("errorMsg", "공지사항 삭제 실패");
+			request.setAttribute("errorMsg", "사진게시글 조회 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	}
 

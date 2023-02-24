@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 import static com.kh.common.JDBCTemplate.*;
-
 import com.kh.notice.model.vo.Notice;
 
 public class NoticeDao {
+
 	
 	private Properties prop = new Properties();
 	
@@ -31,12 +31,11 @@ public class NoticeDao {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
-		
+	
 	public ArrayList<Notice> selectNoticeList(Connection conn){
 		
-		// SELECT문 => ResultSet(여러행)
+		// SELECT문 => ResultSet(여러 행)
 		ArrayList<Notice> list = new ArrayList<>();
 		
 		PreparedStatement pstmt = null;
@@ -44,46 +43,47 @@ public class NoticeDao {
 		ResultSet rset = null;
 		
 		String sql = prop.getProperty("selectNoticeList");
-				
+		
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
 			rset = pstmt.executeQuery();
 			
-			// rset.next() 함수를 통해 다음행이 있는지 검사
+			//rset.next()함수를 통해 다음행이 있는지 검사
 			
 			while(rset.next()) {
 				Notice n = new Notice(
-						rset.getInt("NOTICE_NO"),
-						rset.getString("NOTICE_TITLE"),
-						rset.getString("USER_ID"),
-						rset.getInt("COUNT"),
-						rset.getDate("CREATE_DATE")
-						);
-				list.add(n);
+								rset.getInt("NOTICE_NO"),
+								rset.getString("NOTICE_TITLE"),
+								rset.getString("USER_ID"),
+								rset.getInt("COUNT"),
+								rset.getDate("CREATE_DATE")
+								);
+				list.add(n);				
 			}
-				
+			
 			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(rset);
 			close(pstmt);
 		}
+		
 		return list;
 		
-		
-
-		
 	}
-
+	
 	public int increaseCount(Connection conn, int nno) {
+		
 		int result = 0;
 		
-		PreparedStatement pstmt= null;
+		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("increaseCount");
+		
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -95,18 +95,20 @@ public class NoticeDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(pstmt);
 		}
+		
 		return result;
 	}
-		
+	
+	
 	public Notice selectNotice(Connection conn, int nno) {
 		
-		// select - > Result객체로 => 1개의 행만 조회
+		// select - > Result객체 => 1개의 행만 조회
 		Notice n = null;
 		
-		PreparedStatement pstmt= null;
+		PreparedStatement pstmt = null;
 		
 		ResultSet rset = null;
 		
@@ -129,17 +131,22 @@ public class NoticeDao {
 						);
 			}
 			
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(rset);
 			close(pstmt);
 		}
+		
+		
 		return n;
+		
 		
 	}
 	
-	public int insertNotice(Connection conn, String title, String content, String noticeWriter) {
+	public int insertNotice(Connection conn, Notice n) {
 		
 		int result = 0;
 		
@@ -149,28 +156,28 @@ public class NoticeDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-	
-			pstmt.setString(1, title);
-			pstmt.setString(2, content);
-			pstmt.setString(3, noticeWriter);
-				
-			//pstmt.setInt(3, Inter.parseInt(n.getNoticeWriter()));
+			pstmt.setString(1, n.getNoticeTitle());
+			pstmt.setString(2, n.getNoticeContent());
+			pstmt.setInt(3, Integer.parseInt(n.getNoticeWriter()) );
 			
 			result = pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
-			
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(pstmt);
-			
 		}
 		return result;
 	}
+	
 	public int selectNoticeNo(Connection conn) {
+		
 		int noticeNo = 0;
+		
 		PreparedStatement pstmt = null;
 		
 		ResultSet rset = null;
+		
 		String sql = prop.getProperty("selectNoticeNo");
 		
 		try {
@@ -183,20 +190,23 @@ public class NoticeDao {
 			}
 			
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
+		
+		
 		return noticeNo;
 	}
 	
-	public int updateNotice(Connection conn, Notice n) {
+	
+	public int updateNotice(Connection conn, Notice n ) {
+		
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
-	
+		
 		String sql = prop.getProperty("updateNotice");
 		
 		try {
@@ -209,18 +219,22 @@ public class NoticeDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(pstmt);
 		}
+		
+		
 		return result;
+		
 	}
 	
 	public int deleteNotice(Connection conn, int noticeNo) {
 		
 		int result = 0;
-		PreparedStatement pstmt =null;
-		String sql = prop.getProperty("deleteNotice");
 		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteNotice");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -228,30 +242,41 @@ public class NoticeDao {
 			
 			result = pstmt.executeUpdate();
 			
-			
 		} catch (SQLException e) {
-
-
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(pstmt);
 		}
 		
 		return result;
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
