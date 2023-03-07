@@ -1,6 +1,8 @@
 package com.kh.board.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.board.model.service.BoardService;
 import com.kh.board.model.vo.Attachment;
 import com.kh.board.model.vo.Board;
+import com.kh.board.model.vo.Reply;
 
 /**
  * Servlet implementation class BoardDetailController
@@ -43,10 +46,11 @@ public class BoardDetailController extends HttpServlet {
 			
 			Board b = bService.selectBoard(boardNo);
 			Attachment at = bService.selectAttachment(boardNo);
+			ArrayList<Reply> list = bService.selectReplyList(boardNo);
 			
 			request.setAttribute("b", b);
 			request.setAttribute("at", at);
-			
+			request.setAttribute("list", list);
 			request.getRequestDispatcher("views/board/boardDetailView.jsp").forward(request, response);
 			
 		}else { // 조회수 증가 실패시

@@ -565,7 +565,7 @@ public class BoardDao {
 	
 	public ArrayList<Board> searchList(Connection conn, String searchType, String keyword){
 		
-		ArrayList<Board> list = new ArrayList();
+		ArrayList<Board> list = new ArrayList<>();
 		
 		PreparedStatement pstmt = null;
 		

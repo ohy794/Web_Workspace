@@ -39,7 +39,7 @@ public class HtmlTestController extends HttpServlet {
 		
 		request.getRequestDispatcher("views/htmlTest.jsp").forward(request, response);
 		
-		
+	
 		
 		
 	}

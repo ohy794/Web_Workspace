@@ -1,9 +1,10 @@
-<%@ page import="com.kh.board.model.vo.*" %>
+<%@ page import="com.kh.board.model.vo.* , java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	Board b = (Board) request.getAttribute("b");
 	Attachment at = (Attachment) request.getAttribute("at");
+	ArrayList<Reply> list = (ArrayList<Reply>) request.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html>
@@ -103,36 +104,76 @@
 					<% } %>
 				</thead>
 				<tbody>
-					<tr>
-						<td>user01</td>
-						<td>테스트 댓글</td>
-						<td>2023-02-20</td>
-					</tr>
-					<tr>
-						<td>user01</td>
-						<td>테스트 댓글</td>
-						<td>2023-02-20</td>
-					</tr>
-					<tr>
-						<td>user01</td>
-						<td>테스트 댓글</td>
-						<td>2023-02-20</td>
-					</tr>
-					<tr>
-						<td>user01</td>
-						<td>테스트 댓글</td>
-						<td>2023-02-20</td>
-					</tr>
+					<% for(Reply r : list){ %>
+						<tr>
+							<td><%= r.getReplyWriter() %></td>
+							<td><%= r.getReplyContent() %></td>
+							<td><%= r.getCreateDate() %></td>
+						</tr>
+					<% } %>
+					
+					
 				</tbody>
 			</table>
 		</div>
-		
-		
-		
-		
+
 	</div>
 
-
+	<script>
+		/* $(function(){
+			setInterval(selectReplyList, 1000);
+		}); */
+		function insertReply(){
+			$.ajax({
+				url : "<%= contextPath%>/rinsert.bo",
+				data : {
+					content : $("#replyContent").val(),
+					bno     : "<%= b.getBoardNo()%>"
+					
+				},
+				success : function(result){
+					//댓글 성공시  result = 1
+					
+					//댓글 실패 result = 0
+					if(result > 0){
+						//새 댓글목록 불러오는 함수호출
+						selectReplyList();
+						// 댓글내용 비워주기
+						$("#replyContent").val("");
+					}else{
+						alert("댓글 작성에 실패했습니다");
+					}
+					
+				}, error : function(){
+					console.log("댓글작성실패")
+				}
+				
+			})
+		}
+		
+		function selectReplyList(){
+			$.ajax({
+				url : "<%= contextPath %>/rlist.bo",
+				data : {bno : "<%= b.getBoardNo()%>"},
+				success : function(list){
+					
+					// 서버로부터 전달받은 리스트를 반복문을 통해 댓글목록으로 변환					
+					let result ="";
+					for(let i of list){
+						result += "<tr>"
+									+"<td>"+i.replyWriter+"</td>"
+									+"<td>"+i.replyContent+"</td>"
+									+"<td>"+i.createDate+"</td>"
+								+"</tr>" 		
+					}	
+					$("#reply-area tbody").html(result);
+				},
+				error : function(){
+					console.log("게시글 목록 조회 실패")
+				}
+			})
+		}
+	</script>
 
 
 

@@ -88,7 +88,7 @@
 	            <br><br>
 	            
 	            <div align="center">
-	            	<button type="submit">회원가입</button>
+	            	<button type="submit" disabled>회원가입</button>
 	            	<button type="reset">초기화</button>
 	            </div>
 	            <br><br>
@@ -96,7 +96,44 @@
 	
 	</div>
 	
+	<script>
+		function idCheck(){
+			// 아이디를 입력하는 input 요소 얻어오기
+			const $userId = $("#enroll-form [name=userId]");
+			// name이 userId인 요소가 menubar.jsp에서도 존재하므로, 확실하게 어디에 속해있는지 잘 적어줘야한다
+			
+			// 비동기 요청 보내기
+			$.ajax({
+				url : "<%= contextPath%>/idCheck.me",
+				data : {userId : $userId.val()},
+				success : function(result){
+						if(result == 'NNNNN'){
+					// 이미 존재하는 아이디인경우
+							alert("이미 존재하거나 회원 탈퇴한 아이디입니다");
+							$userId.focus();		
+						}else{
+							
+					
+					// 사용가능한경우
+					if(confirm("사용 가능한 아이디입니다. 사용하시겠습니까?")){
+						// 아이디값 수정할수없게 막기
+						$userId.attr("readonly", true);//아이디값 확정
+						// 회원가입버튼 활성화
+						$("#enroll-form :submit").removeAttr("disabled");//회원가입 버튼 활성화						
+					}else{//사용안함
+						$userId.val("");
+						$userId.focus();
+							}
+						}
+					},
 	
+				error : function(){
+					console.log("아이디 중복 체크 실패");
+				}							
+				
+			})			
+		}
+	</script>
 	
 	
 	

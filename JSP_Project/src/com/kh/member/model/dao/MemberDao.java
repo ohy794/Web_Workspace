@@ -241,7 +241,35 @@ public class MemberDao {
 		return result;
 	}
 	
-	
+	public int idCheck(Connection conn, String userId) {
+		
+		// SELECT문 실행 예정 -> 결과값은 무조건 한행
+		int count = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset =null;
+		
+		String sql = prop.getProperty("idCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return count;
+	}
 	
 	
 	
