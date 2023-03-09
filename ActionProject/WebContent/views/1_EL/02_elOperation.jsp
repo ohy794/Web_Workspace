@@ -83,17 +83,17 @@
 		AND 연산 : ${true && true } 또는 ${true and true }<br>
 		OR  연산 : ${true || false} 또는 ${false or true }<br>
 	</p>
-	
+	 
 	<h3>연습문제</h3>
 	 
 	<p>
-		*EL연산에서 배운 키워드만 가지고 써보기<br>
+		*EL연산에서 배운 키워드만 가지고 써보기<br>	
 		big이 small보다 크고 lOne은 텅비어있습니까? : ${big gt small and  empty lOne }<br>
 		big과 small의 곱은 4의 배수입니까? :${big * small mod 4 eq 0  } <br>
 		lTwo가 텅 비어있지 않거나 또는 sOne에 담긴 값이 "안녕하쇼" 와 일치합니까? ${!empty lTwo or sOne eq '안녕하쇼' }<br>
 	</p>
 	
-
+	
 	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
 </html>
