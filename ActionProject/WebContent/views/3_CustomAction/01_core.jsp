@@ -230,14 +230,52 @@ for loop문  - (&lt; c:forEach var="변수명" begin="초기값" end="끝값" st
 			</c:forEach>
 		</c:otherwise>
 	</c:choose>
-	
 </table>
 
+<h3>5. 반복문 - forTokens</h3>
+<pre>
+&lt; c:forTokens var="각값을 보관할 변수" items="분리시키고자하는 문자열" delims="구분자"&gt;
+- 구분자를 통해서 분리된 각각의 문자열에 순차적으로 접근하면서 반복 수행
+- Java의 split("구분자") 혹은 StringTokenizer와 비슷한 역할을 수행하는 태그
+</pre>
+
+<c:set var="device" value="컴퓨터 , 핸드폰, TV, 에어컨, 냉장고.세탁기/비데"/>
+
+<ul>
+	<c:forTokens var="d" items="${device }" delims=",.">
+		<li>${d }</li>
+	</c:forTokens>
+</ul>
+
+<h3>6. 쿼리스트링 관련 태그 - url , param</h3>
+<pre>
+&lt; c:url var="" value="요청할url"&gt;
+	&lt; c:param name="키값" value="밸류값"/&gt;
+	&lt; c:param name="키값" value="밸류값"/&gt;
+	&lt; c:param name="키값" value="밸류값"/&gt;
+&lt;/c:url&gt;
+- url 경로를 생성하고, 쿼리스트링을 정의할수 있는태그
+- 넘겨줘야할 쿼리스트링이 길경우 사용하면 편리하고,
+- 특정조건에 따라 파라미터값을 다르게보내야할때 자주 사용됨
+</pre>
+
+<c:set var="contextPath" value="<%= request.getContextPath() %>"/>
+
+<a href="${contextPath }/list.do?currentPage=1&num=4">기존방식</a>
+
+<c:url var="query" value="list.do">
+	<c:param name="currentPage">1</c:param>
+	<c:param name="num" value="4"/>
+</c:url>
+
+<a href="${contextPath }/${query}">c:url을 이용한 방식</a>
 
 
 
 
 
 
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
 </html>
